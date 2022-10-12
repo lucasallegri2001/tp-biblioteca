@@ -1,5 +1,6 @@
 package negocios;
 
+import datos.Empleado;
 import datos.Libro;
 import datos.Socio;
 import interfaz.Interfaz;
@@ -10,6 +11,7 @@ public class SectorVentas {
 
   LinkedList<Socio> Socios = new LinkedList<Socio>();
   LinkedList<Libro> Libros = new LinkedList<Libro>();
+  LinkedList<Empleado> Empleados = new LinkedList<Empleado>();
 
   public static void main(String[] args) {
     Interfaz interfaz1 = new Interfaz();
@@ -35,7 +37,7 @@ public class SectorVentas {
       return false;
     }
 
-    // Si ninguna de las condiciones excluyentes se cumplen, procedemos a registrar al socio en el sistema.
+    // Si ninguna de las condiciones anteriores se cumplen procedemos a registrar al socio en el sistema.
     Socios.add(socio);
     return true;
   }
@@ -44,6 +46,23 @@ public class SectorVentas {
     // TODO: Faltan realizar validaciones antes de agregar libros.
     Libros.add(libro);
     return true;
+  }
+
+  public boolean addEmpleado(Empleado empleado) {
+    // TODO: Faltan realizar validaciones antes de agregar empleados.
+    Empleados.add(empleado);
+    return true;
+  }
+
+  public Empleado buscarUsuario(String usuario) {
+    for(Empleado empleado : Empleados) {
+      if(empleado.getUsuario().equalsIgnoreCase(usuario)) return empleado;
+    }
+    return null;
+  }
+
+  public boolean validarLogin(Empleado empleado, String contraseña) {
+    return empleado.getContraseña().equals(contraseña);
   }
 
   public boolean librosDisponibles() {

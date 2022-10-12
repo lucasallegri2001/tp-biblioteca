@@ -1,11 +1,11 @@
 package interfaz;
 
+import datos.Empleado;
 import datos.Libro;
 import datos.Socio;
 import negocios.SectorVentas;
 
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -17,10 +17,31 @@ public class Interfaz {
   public void login() {
     sobreCarga();
     System.out.println("Bienvenido al sistema de ventas de Biblioteca Jenny");
+    System.out.println("Ingrese su nombre de usuario:");
+    String usuario = entrada.next();
+    Empleado empleado = ventas.buscarUsuario(usuario);
+
+    if(empleado == null) {
+      System.out.println("No se encontró ese usuario.");
+      login();
+    }
+
+    System.out.println("Ingrese la contraseña de su usuario:");
+    String contraseña = entrada.next();
+    if(!ventas.validarLogin(empleado, contraseña)) {
+      System.out.println("Contraseña inválida.");
+      login();
+    }
+
+    System.out.println("Bienvenido " + empleado.getNombre());
     imprimirMenu();
   }
 
   private void sobreCarga() {
+    Empleado empleado1 = new Empleado("Gabriel", "Rodriguez", "233503939");
+    empleado1.setUsuario("usuario");
+    empleado1.setContraseña("contraseña");
+    ventas.addEmpleado(empleado1);
     ventas.addSocio(new Socio("Raul", "Martinez", "23592929"));
     ventas.addSocio(new Socio("Francisco", "Gomez", "33792999"));
     ventas.addSocio(new Socio("Luis", "Gutierrez", "12345678"));
@@ -66,15 +87,40 @@ public class Interfaz {
   }
 
   private void registrarVenta() {
-
+    System.out.println("Sin implementar.");
+    imprimirMenu();
   }
 
   private void registrarSocio() {
+    System.out.println("Ingrese el nombre del socio:");
+    String nombre = entrada.next();
+    System.out.println("Ingrese el nombre del socio:");
+    String apellido = entrada.next();
+    System.out.println("Ingrese el dni del socio:");
+    String dni = entrada.next();
 
+    if(ventas.addSocio(new Socio(nombre, apellido, dni))) {
+      System.out.println("Se registró al socio correctamente");
+      pulsarParaContinuar();
+      imprimirMenu();
+    } else {
+      System.out.println("Datos inválidos.");
+      imprimirMenu();
+    }
   }
 
   private void registrarLibro() {
+    System.out.println("Ingrese el nombre del libro:");
+    String nombre = entrada.next();
 
+    if(ventas.addLibro(new Libro(200, nombre))) {
+      System.out.println("Se registró al libro correctamente");
+      pulsarParaContinuar();
+      imprimirMenu();
+    } else {
+      System.out.println("Datos inválidos.");
+      imprimirMenu();
+    }
   }
 
   private void salir() {
@@ -109,7 +155,7 @@ public class Interfaz {
         sociosRegistrados();
         break;
       case 6:
-        regresarMenuPrincipal();
+        imprimirMenu();
         break;
       default:
         System.out.println("Se eligio una opción incorrecta. Vuelva a intentar");
@@ -180,10 +226,6 @@ public class Interfaz {
       pulsarParaContinuar();
       menuBusqueda();
     }
-  }
-
-  private void regresarMenuPrincipal() {
-    imprimirMenu();
   }
 
   private void menuSocio(Socio socio) {
