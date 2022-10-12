@@ -2,13 +2,13 @@ package datos;
 
 public class Socio extends Persona {
 
-  private int nivel;
-  private int numeroMultas;
+  private int nivel = 1;
+  private int numeroMultas = 0;
+
+  public Socio() { super(); }
 
   public Socio(String nombre, String apellido, String dni) {
     super(nombre, apellido, dni);
-    this.nivel = 0;
-    this.numeroMultas = 0;
   }
 
   public int getNivel() {
@@ -29,9 +29,12 @@ public class Socio extends Persona {
 
   @Override
   public String toString() {
-    return "datos.Socio{" +
-        "nivel=" + nivel +
+    return "Socio{" +
+        "nombre=" + super.getNombre() +
+        ", apellido=" + super.getApellido() +
+        ", dni=" + super.getDni() +
+        ", nivel=" + nivel +
         ", numeroMultas=" + numeroMultas +
-        '}';
+        "} ";
   }
 }

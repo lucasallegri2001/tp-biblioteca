@@ -4,7 +4,7 @@ public class Empleado extends Persona {
 
   private int id;
 
-  public Empleado(String nombre, String apellido, int dni) {
+  public Empleado(String nombre, String apellido, String dni) {
     super(nombre, apellido, dni);
   }
 

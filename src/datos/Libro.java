@@ -4,6 +4,7 @@ public class Libro {
 
   private int id;
   private String nombre;
+
   private int stock = 10;
 
   public Libro(int id, String nombre) {
@@ -25,6 +26,14 @@ public class Libro {
 
   public void setNombre(String nombre) {
     this.nombre = nombre;
+  }
+
+  public int getStock() {
+    return stock;
+  }
+
+  public void setStock(int stock) {
+    this.stock = stock;
   }
 
   public void ventaRealizada() {
