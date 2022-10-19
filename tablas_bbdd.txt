@@ -1,0 +1,101 @@
+CREATE TABLE SOCIO
+       (
+       ID INT NOT NULL,                              
+       NIVEL INT NOT NULL,                              
+       NOMBRE CHAR(10) NOT NULL,                              
+       APELLIDO CHAR(10) NOT NULL,                              
+       DNI INT NOT NULL,                              
+       MULTA INT NOT NULL,                              
+       PRIMARY KEY
+               (
+               ID
+               )
+       );
+
+
+
+CREATE TABLE EMPLEADO
+       (
+       ID INT NOT NULL,                              
+       USUARIO CHAR(15) NOT NULL,                              
+       CONTRASEÑA CHAR(20) NOT NULL,                              
+       PRIMARY KEY
+               (
+               ID
+               )
+       );
+
+
+
+CREATE TABLE PERSONA
+       (
+       ID INT NOT NULL,                              
+       NOMBRE CHAR(10) NOT NULL,                              
+       APELLIDO CHAR(10) NOT NULL,                              
+       DNI INT NOT NULL,                              
+       PRIMARY KEY
+               (
+               ID
+               )
+       );
+
+
+
+CREATE TABLE LIBRO
+       (
+       ID INT NOT NULL,                              
+       ID_1 INT NOT NULL,                              
+       NOMBRE CHAR(10) NOT NULL,                              
+       STOCK INT NOT NULL,                              
+       PRIMARY KEY
+               (
+               ID
+               ),
+       FOREIGN KEY
+               (
+               ID_1
+               )
+          REFERENCES SOCIO
+               (
+               ID
+               )
+       );
+
+
+
+CREATE TABLE ATIENDE
+       (
+       ID INT NOT NULL,                              
+       ID_1 INT NOT NULL,                              
+       ID_2 INT NOT NULL,                              
+       PRIMARY KEY
+               (
+               ID,
+               ID_1,
+               ID_2
+               ),
+       FOREIGN KEY
+               (
+               ID
+               )
+          REFERENCES SOCIO
+               (
+               ID
+               ),
+       FOREIGN KEY
+               (
+               ID_1
+               )
+          REFERENCES EMPLEADO
+               (
+               ID
+               ),
+       FOREIGN KEY
+               (
+               ID_2
+               )
+          REFERENCES PERSONA
+               (
+               ID
+               )
+       );
