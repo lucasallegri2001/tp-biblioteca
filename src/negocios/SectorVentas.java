@@ -12,6 +12,7 @@ public class SectorVentas {
   LinkedList<Socio> Socios = new LinkedList<Socio>();
   LinkedList<Libro> Libros = new LinkedList<Libro>();
   LinkedList<Empleado> Empleados = new LinkedList<Empleado>();
+  ConexionDB baseDatos = ConexionDB.getInstancia();
 
   public static void main(String[] args) {
     Interfaz interfaz1 = new Interfaz();
@@ -109,10 +110,12 @@ public class SectorVentas {
 
   public void cambiarNivel(Socio socio, int nivel) {
     socio.setNivel(nivel);
+    socio.guardar();
   }
 
   public void agregarMulta(Socio socio) {
     socio.setNumeroMultas(socio.getNumeroMultas()+1);
+    socio.guardar();
   }
 
   public void borrarSocio(Socio socio) {

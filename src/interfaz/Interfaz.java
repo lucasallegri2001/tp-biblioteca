@@ -42,10 +42,19 @@ public class Interfaz {
     empleado1.setUsuario("usuario");
     empleado1.setContraseña("contraseña");
     ventas.addEmpleado(empleado1);
-    ventas.addSocio(new Socio("Raul", "Martinez", "23592929"));
-    ventas.addSocio(new Socio("Francisco", "Gomez", "33792999"));
-    ventas.addSocio(new Socio("Luis", "Gutierrez", "12345678"));
-    ventas.addSocio(new Socio("Juan", "Ramon", "12121212"));
+
+    //ventas.addSocio(new Socio("Raul", "Martinez", "23592929"));
+    //ventas.addSocio(new Socio("Francisco", "Gomez", "33792999"));
+    //ventas.addSocio(new Socio("Luis", "Gutierrez", "12345678"));
+    //ventas.addSocio(new Socio("Juan", "Ramon", "12121212"));
+
+    LinkedList<Socio> socios = Socio.listar();
+    if(socios != null && !socios.isEmpty()) {
+      for(Socio socio : socios) {
+        ventas.addSocio(socio);
+      }
+    }
+
     ventas.addLibro(new Libro(1, "Los Juegos del Hambre"));
     ventas.addLibro(new Libro(2, "El Señor de los Anillos"));
     ventas.addLibro(new Libro(3, "Juego de Tronos"));
