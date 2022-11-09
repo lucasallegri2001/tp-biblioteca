@@ -13,7 +13,10 @@ CREATE TABLE socio (
 );
 
 CREATE TABLE empleado (
-       id INT NOT NULL AUTO_INCREMENT,                                    
+       id INT NOT NULL AUTO_INCREMENT,
+       nombre INT NOT NULL,                              
+       apellido INT NOT NULL,
+       dni VARCHAR(8) NOT NULL,
        usuario VARCHAR(50) NOT NULL,                              
        contraseña VARCHAR(50) NOT NULL,                              
        
