@@ -1,101 +1,43 @@
-CREATE TABLE SOCIO
-       (
-       ID INT NOT NULL,                              
-       NIVEL INT NOT NULL,                              
-       NOMBRE CHAR(10) NOT NULL,                              
-       APELLIDO CHAR(10) NOT NULL,                              
-       DNI INT NOT NULL,                              
-       MULTA INT NOT NULL,                              
-       PRIMARY KEY
-               (
-               ID
-               )
-       );
+CREATE DATABASE biblioteca;
+
+CREATE TABLE socio (
+       id INT NOT NULL AUTO_INCREMENT,                                    
+       nivel VARCHAR(50) NOT NULL,                              
+       nombre INT NOT NULL,                              
+       apellido INT NOT NULL,
+       dni VARCHAR(8) NOT NULL,
+       multa INT NOT NULL,
+       
+       PRIMARY KEY (id)
+
+);
+
+CREATE TABLE empleado (
+       id INT NOT NULL AUTO_INCREMENT,                                    
+       usuario VARCHAR(50) NOT NULL,                              
+       contraseña VARCHAR(50) NOT NULL,                              
+       
+       PRIMARY KEY (id)
+
+);
 
 
 
-CREATE TABLE EMPLEADO
-       (
-       ID INT NOT NULL,                              
-       USUARIO CHAR(15) NOT NULL,                              
-       CONTRASEÑA CHAR(20) NOT NULL,                              
-       PRIMARY KEY
-               (
-               ID
-               )
-       );
+CREATE TABLE libro (
+       id INT NOT NULL AUTO_INCREMENT,                                    
+       nombre VARCHAR(50) NOT NULL,                              
+       stock INT NOT NULL,                              
+       
+       PRIMARY KEY (id)
+
+);
 
 
-
-CREATE TABLE PERSONA
-       (
-       ID INT NOT NULL,                              
-       NOMBRE CHAR(10) NOT NULL,                              
-       APELLIDO CHAR(10) NOT NULL,                              
-       DNI INT NOT NULL,                              
-       PRIMARY KEY
-               (
-               ID
-               )
-       );
-
-
-
-CREATE TABLE LIBRO
-       (
-       ID INT NOT NULL,                              
-       ID_1 INT NOT NULL,                              
-       NOMBRE CHAR(10) NOT NULL,                              
-       STOCK INT NOT NULL,                              
-       PRIMARY KEY
-               (
-               ID
-               ),
-       FOREIGN KEY
-               (
-               ID_1
-               )
-          REFERENCES SOCIO
-               (
-               ID
-               )
-       );
-
-
-
-CREATE TABLE ATIENDE
-       (
-       ID INT NOT NULL,                              
-       ID_1 INT NOT NULL,                              
-       ID_2 INT NOT NULL,                              
-       PRIMARY KEY
-               (
-               ID,
-               ID_1,
-               ID_2
-               ),
-       FOREIGN KEY
-               (
-               ID
-               )
-          REFERENCES SOCIO
-               (
-               ID
-               ),
-       FOREIGN KEY
-               (
-               ID_1
-               )
-          REFERENCES EMPLEADO
-               (
-               ID
-               ),
-       FOREIGN KEY
-               (
-               ID_2
-               )
-          REFERENCES PERSONA
-               (
-               ID
-               )
-       );
+CREATE TABLE promocion (
+       id INT NOT NULL AUTO_INCREMENT,                                    
+       nombre_promocion VARCHAR(50) NOT NULL,                              
+       precio DOUBLE NOT NULL,                              
+       
+       PRIMARY KEY (id)
+       
+);
