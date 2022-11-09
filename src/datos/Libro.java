@@ -1,15 +1,39 @@
 package datos;
 
+import negocios.ConexionDB;
+
+import java.sql.PreparedStatement;
+
 public class Libro {
 
   private int id;
   private String nombre;
+  private int stock;
 
-  private int stock = 10;
-
-  public Libro(int id, String nombre) {
+  public Libro(int id, String nombre, int stock) {
     this.id = id;
     this.nombre = nombre;
+    this.stock = stock;
+  }
+
+  public boolean guardar() {
+    String sql = "INSERT INTO `libro` (`nombre`, `stock`) VALUES (?,?)";
+    PreparedStatement stmt;
+
+    try {
+      stmt = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
+
+      stmt.setString(1, this.getNombre());
+      stmt.setInt(2, this.getStock());
+      stmt.executeUpdate();
+      stmt.close();
+
+      return true;
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 
   public int getId() {

@@ -10,6 +10,14 @@ public class Empleado extends Persona {
     super(nombre, apellido, dni);
   }
 
+  public Empleado(String nombre, String apellido, String dni, String usuario, String contraseña) {
+    super(nombre, apellido, dni);
+    this.usuario = usuario;
+    this.contraseña = contraseña;
+  }
+
+  public Empleado() {}
+
   public int getId() {
     return id;
   }

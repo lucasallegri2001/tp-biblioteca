@@ -2,6 +2,7 @@ package negocios;
 
 import datos.Empleado;
 import datos.Libro;
+import datos.Promocion;
 import datos.Socio;
 import interfaz.Interfaz;
 
@@ -45,14 +46,35 @@ public class SectorVentas {
 
   public boolean addLibro(Libro libro) {
     // TODO: Faltan realizar validaciones antes de agregar libros.
-    Libros.add(libro);
-    return true;
+    char[] dato = libro.getNombre().toCharArray();
+
+    if(dato.length > 1 && dato.length < 50) {
+      int stock = libro.getStock();
+
+      if (stock >= 1) {
+        Libros.add(libro);
+        return libro.guardar();
+      }
+    }
+    return false;
   }
 
   public boolean addEmpleado(Empleado empleado) {
     // TODO: Faltan realizar validaciones antes de agregar empleados.
     Empleados.add(empleado);
     return true;
+  }
+
+  public boolean addPromocion(Promocion promocion) {
+    char[] dato = promocion.getNombre_promocion().toCharArray();
+
+    if(dato.length > 1 && dato.length < 2000) {
+      double precio = promocion.getPrecio();
+      if (precio>=1) {
+        return promocion.agregar();
+      }
+    }
+    return false;
   }
 
   public Empleado buscarUsuario(String usuario) {

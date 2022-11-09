@@ -13,11 +13,8 @@ public class Socio extends Persona {
   private int nivel = 1;
   private int numeroMultas = 0;
 
-  public Socio() { super(); }
-
   public Socio(String nombre, String apellido, String dni) {
     super(nombre, apellido, dni);
-    guardar();
   }
 
   public Socio(int id, String nombre, String apellido, String dni, int nivel, int numeroMultas) {
@@ -25,6 +22,8 @@ public class Socio extends Persona {
     this.nivel = nivel;
     this.numeroMultas = numeroMultas;
   }
+
+  public Socio() {}
 
   public int getNivel() {
     return nivel;

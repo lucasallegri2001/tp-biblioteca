@@ -55,11 +55,11 @@ public class Interfaz {
       }
     }
 
-    ventas.addLibro(new Libro(1, "Los Juegos del Hambre"));
-    ventas.addLibro(new Libro(2, "El Señor de los Anillos"));
-    ventas.addLibro(new Libro(3, "Juego de Tronos"));
-    ventas.addLibro(new Libro(4, "1984"));
-    ventas.addLibro(new Libro(5, "Bajo la Misma Estrella"));
+    ventas.addLibro(new Libro(1, "Los Juegos del Hambre", 10));
+    ventas.addLibro(new Libro(2, "El Señor de los Anillos", 10));
+    ventas.addLibro(new Libro(3, "Juego de Tronos", 10));
+    ventas.addLibro(new Libro(4, "1984", 10));
+    ventas.addLibro(new Libro(5, "Bajo la Misma Estrella", 10));
   }
 
   private void imprimirMenu() {
@@ -122,7 +122,7 @@ public class Interfaz {
     System.out.println("Ingrese el nombre del libro:");
     String nombre = entrada.next();
 
-    if(ventas.addLibro(new Libro(200, nombre))) {
+    if(ventas.addLibro(new Libro(200, nombre, 10))) {
       System.out.println("Se registró al libro correctamente");
       pulsarParaContinuar();
       imprimirMenu();
