@@ -38,28 +38,48 @@ public class Interfaz {
   }
 
   private void sobreCarga() {
-    Empleado empleado1 = new Empleado("Gabriel", "Rodriguez", "233503939");
-    empleado1.setUsuario("usuario");
-    empleado1.setContraseña("contraseña");
-    ventas.addEmpleado(empleado1);
 
-    //ventas.addSocio(new Socio("Raul", "Martinez", "23592929"));
-    //ventas.addSocio(new Socio("Francisco", "Gomez", "33792999"));
-    //ventas.addSocio(new Socio("Luis", "Gutierrez", "12345678"));
-    //ventas.addSocio(new Socio("Juan", "Ramon", "12121212"));
+    LinkedList<Libro> libros = Libro.listar();
+    if(libros != null && !libros.isEmpty()) {
+      for(Libro libro : libros) {
+        ventas.addLibro(libro);
+      }
+    } else {
+      new Libro("Los Juegos del Hambre", 10).guardar();
+    }
+
+    LinkedList<Empleado> empleados = Empleado.listar();
+    if(empleados != null && !empleados.isEmpty()) {
+      for(Empleado empleado : empleados) {
+        ventas.addEmpleado(empleado);
+      }
+    } else {
+      Empleado empleadoDefault = new Empleado("Gabriel", "Rodriguez", "233503939");
+      empleadoDefault.setUsuario("usuario");
+      empleadoDefault.setContraseña("contraseña");
+      empleadoDefault.guardar();
+    }
 
     LinkedList<Socio> socios = Socio.listar();
     if(socios != null && !socios.isEmpty()) {
       for(Socio socio : socios) {
         ventas.addSocio(socio);
       }
+    } else {
+      new Socio("Raul", "Martinez", "23592929").guardar();
     }
 
-    ventas.addLibro(new Libro(1, "Los Juegos del Hambre", 10));
-    ventas.addLibro(new Libro(2, "El Señor de los Anillos", 10));
-    ventas.addLibro(new Libro(3, "Juego de Tronos", 10));
-    ventas.addLibro(new Libro(4, "1984", 10));
-    ventas.addLibro(new Libro(5, "Bajo la Misma Estrella", 10));
+    //ventas.addSocio(new Socio("Raul", "Martinez", "23592929"));
+    //ventas.addSocio(new Socio("Francisco", "Gomez", "33792999"));
+    //ventas.addSocio(new Socio("Luis", "Gutierrez", "12345678"));
+    //ventas.addSocio(new Socio("Juan", "Ramon", "12121212"));
+
+    //ventas.addLibro(new Libro(1, "Los Juegos del Hambre", 10));
+    //ventas.addLibro(new Libro(2, "El Señor de los Anillos", 10));
+    //ventas.addLibro(new Libro(3, "Juego de Tronos", 10));
+    //ventas.addLibro(new Libro(4, "1984", 10));
+    //ventas.addLibro(new Libro(5, "Bajo la Misma Estrella", 10));
+
   }
 
   private void imprimirMenu() {
@@ -103,7 +123,7 @@ public class Interfaz {
   private void registrarSocio() {
     System.out.println("Ingrese el nombre del socio:");
     String nombre = entrada.next();
-    System.out.println("Ingrese el nombre del socio:");
+    System.out.println("Ingrese el apellido del socio:");
     String apellido = entrada.next();
     System.out.println("Ingrese el dni del socio:");
     String dni = entrada.next();

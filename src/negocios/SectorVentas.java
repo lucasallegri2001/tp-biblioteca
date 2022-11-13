@@ -52,8 +52,7 @@ public class SectorVentas {
       int stock = libro.getStock();
 
       if (stock >= 1) {
-        Libros.add(libro);
-        return libro.guardar();
+        return Libros.add(libro);
       }
     }
     return false;

@@ -19,6 +19,7 @@ public class Socio extends Persona {
 
   public Socio(int id, String nombre, String apellido, String dni, int nivel, int numeroMultas) {
     super(nombre, apellido, dni);
+    this.id = id;
     this.nivel = nivel;
     this.numeroMultas = numeroMultas;
   }
@@ -81,6 +82,7 @@ public class Socio extends Persona {
       stmt.setString(3, this.getDni());
       stmt.setInt(4, this.getNivel());
       stmt.setInt(5, this.getNumeroMultas());
+      stmt.setInt(6, this.id);
       stmt.executeUpdate();
       stmt.close();
 
