@@ -5,8 +5,11 @@ import datos.Libro;
 import datos.Promocion;
 import datos.Socio;
 import interfaz.Interfaz;
+import interfaz.InterfazLogin;
+import interfaz.InterfazEmpleado;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class SectorVentas {
 
@@ -17,7 +20,52 @@ public class SectorVentas {
 
   public static void main(String[] args) {
     Interfaz interfaz1 = new Interfaz();
-    interfaz1.login();
+    interfaz1.iniciar();
+  }
+  
+  public void sobreCarga() {
+
+    LinkedList<Libro> libros = Libro.listar();
+    if(libros != null && !libros.isEmpty()) {
+      for(Libro libro : libros) {
+        addLibro(libro);
+      }
+    } else {
+      new Libro("Los Juegos del Hambre", 10).guardar();
+    }
+
+    LinkedList<Empleado> empleados = Empleado.listar();
+    if(empleados != null && !empleados.isEmpty()) {
+      for(Empleado empleado : empleados) {
+        addEmpleado(empleado);
+      }
+    } else {
+      Empleado empleadoDefault = new Empleado("Gabriel", "Rodriguez", "233503939");
+      empleadoDefault.setUsuario("usuario");
+      empleadoDefault.setContraseña("contraseña");
+      empleadoDefault.guardar();
+    }
+
+    LinkedList<Socio> socios = Socio.listar();
+    if(socios != null && !socios.isEmpty()) {
+      for(Socio socio : socios) {
+        addSocio(socio);
+      }
+    } else {
+      new Socio("Raul", "Martinez", "23592929").guardar();
+    }
+
+    //ventas.addSocio(new Socio("Raul", "Martinez", "23592929"));
+    //ventas.addSocio(new Socio("Francisco", "Gomez", "33792999"));
+    //ventas.addSocio(new Socio("Luis", "Gutierrez", "12345678"));
+    //ventas.addSocio(new Socio("Juan", "Ramon", "12121212"));
+
+    //ventas.addLibro(new Libro(1, "Los Juegos del Hambre", 10));
+    //ventas.addLibro(new Libro(2, "El Señor de los Anillos", 10));
+    //ventas.addLibro(new Libro(3, "Juego de Tronos", 10));
+    //ventas.addLibro(new Libro(4, "1984", 10));
+    //ventas.addLibro(new Libro(5, "Bajo la Misma Estrella", 10));
+
   }
 
   public boolean addSocio(Socio socio) {
@@ -44,11 +92,16 @@ public class SectorVentas {
     return true;
   }
 
+  public boolean guardarSocio(Socio socio) {
+    // TODO: Faltan realizar validaciones antes de guardar socios.
+    return socio.guardar();
+  }
+
   public boolean addLibro(Libro libro) {
     // TODO: Faltan realizar validaciones antes de agregar libros.
     char[] dato = libro.getNombre().toCharArray();
 
-    if(dato.length > 1 && dato.length < 50) {
+    if(dato.length > 1 && dato.length < 100) {
       int stock = libro.getStock();
 
       if (stock >= 1) {
@@ -58,10 +111,20 @@ public class SectorVentas {
     return false;
   }
 
+  public boolean guardarLibro(Libro libro) {
+    // TODO: Faltan realizar validaciones antes de guardar libros.
+    return libro.guardar();
+  }
+
   public boolean addEmpleado(Empleado empleado) {
     // TODO: Faltan realizar validaciones antes de agregar empleados.
     Empleados.add(empleado);
     return true;
+  }
+
+  public boolean guardarEmpleado(Empleado empleado) {
+    // TODO: Faltan realizar validaciones antes de guardar empleados.
+    return empleado.guardar();
   }
 
   public boolean addPromocion(Promocion promocion) {
@@ -75,6 +138,16 @@ public class SectorVentas {
     }
     return false;
   }
+  
+  public boolean login(String usuario, String contraseña) {
+	Empleado empleado = buscarUsuario(usuario);
+
+    if(empleado == null) return false;
+
+    if(!validarLogin(empleado, contraseña)) return false;
+    
+    return true;
+  }
 
   public Empleado buscarUsuario(String usuario) {
     for(Empleado empleado : Empleados) {
@@ -87,23 +160,12 @@ public class SectorVentas {
     return empleado.getContraseña().equals(contraseña);
   }
 
-  public boolean librosDisponibles() {
-    int encontrados = 0;
-    for(Libro libro : Libros) {
-      if(libro.estaDisponible()) {
-        System.out.println(libro);
-        encontrados++;
-      }
-    }
-    return encontrados != 0;
+  public LinkedList<Libro> librosDisponibles() {
+    return Libros;
   }
 
-  public boolean sociosRegistrados() {
-    if(Socios.isEmpty()) return false;
-    for(Socio socio : Socios) {
-      System.out.println(socio);
-    }
-    return true;
+  public LinkedList<Socio> sociosRegistrados() {
+    return Socios;
   }
 
   public Socio buscarSocio(String dni) {
@@ -131,12 +193,12 @@ public class SectorVentas {
 
   public void cambiarNivel(Socio socio, int nivel) {
     socio.setNivel(nivel);
-    socio.guardar();
+    socio.actualizar();
   }
 
   public void agregarMulta(Socio socio) {
     socio.setNumeroMultas(socio.getNumeroMultas()+1);
-    socio.guardar();
+    socio.actualizar();
   }
 
   public void borrarSocio(Socio socio) {
@@ -145,10 +207,12 @@ public class SectorVentas {
 
   public void reponerStock(Libro libro, int cant) {
     libro.reponer(cant);
+    libro.actualizar();
   }
 
   public void renombrarLibro(Libro libro, String nombre) {
     libro.setNombre(nombre);
+    libro.actualizar();
   }
 
   /* Código de referencia - Software Estudiantil

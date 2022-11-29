@@ -12,10 +12,14 @@ import java.util.Scanner;
 public class Interfaz {
 
   static Scanner entrada = new Scanner(System.in);
-  static SectorVentas ventas = new SectorVentas();
+  public static SectorVentas ventas = new SectorVentas();
+  
+  public void iniciar() {
+	ventas.sobreCarga();
+	InterfazLogin.main(null);
+  }
 
   public void login() {
-    sobreCarga();
     System.out.println("Bienvenido al sistema de ventas de Biblioteca Jenny");
     System.out.println("Ingrese su nombre de usuario:");
     String usuario = entrada.next();
@@ -35,51 +39,6 @@ public class Interfaz {
 
     System.out.println("Bienvenido " + empleado.getNombre());
     imprimirMenu();
-  }
-
-  private void sobreCarga() {
-
-    LinkedList<Libro> libros = Libro.listar();
-    if(libros != null && !libros.isEmpty()) {
-      for(Libro libro : libros) {
-        ventas.addLibro(libro);
-      }
-    } else {
-      new Libro("Los Juegos del Hambre", 10).guardar();
-    }
-
-    LinkedList<Empleado> empleados = Empleado.listar();
-    if(empleados != null && !empleados.isEmpty()) {
-      for(Empleado empleado : empleados) {
-        ventas.addEmpleado(empleado);
-      }
-    } else {
-      Empleado empleadoDefault = new Empleado("Gabriel", "Rodriguez", "233503939");
-      empleadoDefault.setUsuario("usuario");
-      empleadoDefault.setContraseña("contraseña");
-      empleadoDefault.guardar();
-    }
-
-    LinkedList<Socio> socios = Socio.listar();
-    if(socios != null && !socios.isEmpty()) {
-      for(Socio socio : socios) {
-        ventas.addSocio(socio);
-      }
-    } else {
-      new Socio("Raul", "Martinez", "23592929").guardar();
-    }
-
-    //ventas.addSocio(new Socio("Raul", "Martinez", "23592929"));
-    //ventas.addSocio(new Socio("Francisco", "Gomez", "33792999"));
-    //ventas.addSocio(new Socio("Luis", "Gutierrez", "12345678"));
-    //ventas.addSocio(new Socio("Juan", "Ramon", "12121212"));
-
-    //ventas.addLibro(new Libro(1, "Los Juegos del Hambre", 10));
-    //ventas.addLibro(new Libro(2, "El Señor de los Anillos", 10));
-    //ventas.addLibro(new Libro(3, "Juego de Tronos", 10));
-    //ventas.addLibro(new Libro(4, "1984", 10));
-    //ventas.addLibro(new Libro(5, "Bajo la Misma Estrella", 10));
-
   }
 
   private void imprimirMenu() {
@@ -236,7 +195,7 @@ public class Interfaz {
   }
 
   private void librosDisponibles() {
-    if(ventas.librosDisponibles()) {
+    if(!ventas.librosDisponibles().isEmpty()) {
       pulsarParaContinuar();
       menuBusqueda();
     } else {
@@ -247,7 +206,7 @@ public class Interfaz {
   }
 
   private void sociosRegistrados() {
-    if(ventas.sociosRegistrados()) {
+    if(!ventas.sociosRegistrados().isEmpty()) {
       pulsarParaContinuar();
       menuBusqueda();
     } else {
