@@ -1,23 +1,25 @@
 package interfaz;
 
+import datos.Socio;
+import datos.Venta;
+
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import java.util.Date;
 
 public class InterfazRegistroVenta extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField fieldID;
 	private JTextField fieldCantidad;
+	private JTextField fieldPrecio;
 
 	/**
 	 * Launch the application.
@@ -29,12 +31,6 @@ public class InterfazRegistroVenta extends JFrame {
 					InterfazRegistroVenta frame = new InterfazRegistroVenta();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.addWindowListener(new WindowAdapter() {
-						@Override
-						public void windowClosed(WindowEvent windowEvent) {
-							InterfazEmpleado.main(null);
-						}
-					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -77,9 +73,31 @@ public class InterfazRegistroVenta extends JFrame {
 		fieldCantidad.setBounds(10, 119, 86, 20);
 		contentPane.add(fieldCantidad);
 		fieldCantidad.setColumns(10);
+
+		JLabel labelPrecio = new JLabel("Precio");
+		labelPrecio.setBounds(10, 151, 115, 14);
+		contentPane.add(labelPrecio);
+
+		fieldPrecio = new JTextField();
+		fieldPrecio.setBounds(10, 167, 86, 20);
+		contentPane.add(fieldPrecio);
+		fieldPrecio.setColumns(10);
 		
 		JButton botonRegistrar = new JButton("Registrar");
-		botonRegistrar.setBounds(10, 178, 115, 23);
+		botonRegistrar.setBounds(10, 210, 115, 23);
+		botonRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Venta venta = new Venta(Integer.parseInt(fieldID.getText()), Integer.parseInt(fieldCantidad.getText()), new Date(), Double.parseDouble(fieldPrecio.getText()));
+				Interfaz.ventas.addVenta(venta);
+				if(Interfaz.ventas.guardarVenta(venta)) {
+					InterfazEmpleado.main(null);
+					JOptionPane.showMessageDialog(null, "Venta registrada");
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Error al registrar venta");
+				}
+			}
+		});
 		contentPane.add(botonRegistrar);
 	}
 }

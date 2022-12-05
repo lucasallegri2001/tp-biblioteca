@@ -15,8 +15,14 @@ public class Interfaz {
   public static SectorVentas ventas = new SectorVentas();
   
   public void iniciar() {
-	ventas.sobreCarga();
-	InterfazLogin.main(null);
+	  ventas.sobreCarga();
+	  InterfazLogin.main(null);
+  }
+
+  public void iniciarUsuario() {
+    ventas.sobreCarga();
+    InterfazLogin.main(null);
+    //InterfazLoginUsuario.main(null);
   }
 
   public void login() {
@@ -101,7 +107,7 @@ public class Interfaz {
     System.out.println("Ingrese el nombre del libro:");
     String nombre = entrada.next();
 
-    if(ventas.addLibro(new Libro(200, nombre, 10))) {
+    if(ventas.addLibro(new Libro(200, nombre, 10, 500))) {
       System.out.println("Se registró al libro correctamente");
       pulsarParaContinuar();
       imprimirMenu();

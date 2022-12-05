@@ -92,6 +92,7 @@ public class InterfazRegistroSocio extends JFrame {
 		botonRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Socio socio = new Socio(fieldNombre.getText(), fieldApellido.getText(), fieldDNI.getText());
+				Interfaz.ventas.addSocio(socio);
 				if(Interfaz.ventas.guardarSocio(socio)) {
 					InterfazEmpleado.main(null);
 					dispose();

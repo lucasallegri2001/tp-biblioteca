@@ -84,7 +84,12 @@ public class InterfazAccionLibro extends JFrame {
 		botonVerVentas.setBounds(10, 148, 200, 23);
 		botonVerVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int[] resumen = Interfaz.ventas.ventasLibroEspecifico(libro);
+				if(resumen[0] != 0) {
+					JOptionPane.showMessageDialog(null, "Se vendieron " + resumen[0] + " unidades de este libro. Ganancias totales: $" + resumen[1]);
+				}
 				dispose();
+				InterfazEmpleado.main(null);
 			}
 		});
 		contentPane.add(botonVerVentas);

@@ -18,6 +18,7 @@ public class InterfazRegistroLibro extends JFrame {
 	private JPanel contentPane;
 	private JTextField fieldStock;
 	private JTextField fieldNombre;
+	private JTextField fieldPrecioBase;
 
 	/**
 	 * Launch the application.
@@ -53,6 +54,15 @@ public class InterfazRegistroLibro extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		fieldPrecioBase = new JTextField();
+		fieldPrecioBase.setColumns(10);
+		fieldPrecioBase.setBounds(10, 167, 100, 20);
+		contentPane.add(fieldPrecioBase);
+
+		JLabel labelPrecioBase = new JLabel("Precio Base");
+		labelPrecioBase.setBounds(10, 151, 115, 14);
+		contentPane.add(labelPrecioBase);
 		
 		fieldStock = new JTextField();
 		fieldStock.setColumns(10);
@@ -79,10 +89,11 @@ public class InterfazRegistroLibro extends JFrame {
 		contentPane.add(labelTitulo);
 
 		JButton botonRegistrar = new JButton("Registrar");
-		botonRegistrar.setBounds(10, 178, 115, 23);
+		botonRegistrar.setBounds(10, 210, 115, 23);
 		botonRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Libro libro = new Libro(fieldNombre.getText(), Integer.parseInt(fieldStock.getText()));
+				Libro libro = new Libro(fieldNombre.getText(), Integer.parseInt(fieldStock.getText()), Double.parseDouble(fieldPrecioBase.getText()));
+				Interfaz.ventas.addLibro(libro);
 				if(Interfaz.ventas.guardarLibro(libro)) {
 					InterfazEmpleado.main(null);
 					dispose();

@@ -4,6 +4,7 @@ import negocios.ConexionDB;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +26,14 @@ public class Socio extends Persona {
   }
 
   public Socio() {}
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public int getNivel() {
     return nivel;
@@ -82,7 +91,7 @@ public class Socio extends Persona {
       stmt.setString(3, this.getDni());
       stmt.setInt(4, this.getNivel());
       stmt.setInt(5, this.getNumeroMultas());
-      stmt.setInt(6, this.id);
+      stmt.setInt(6, this.getId());
       stmt.executeUpdate();
       stmt.close();
 
@@ -100,14 +109,28 @@ public class Socio extends Persona {
     PreparedStatement stmt;
 
     try {
-      stmt = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
+      stmt = ConexionDB.getInstancia().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
       stmt.setString(1, this.getNombre());
       stmt.setString(2, this.getApellido());
       stmt.setString(3, this.getDni());
       stmt.setInt(4, this.getNivel());
       stmt.setInt(5, this.getNumeroMultas());
-      stmt.executeUpdate();
+      int ejecutadas = stmt.executeUpdate();
+
+      if (ejecutadas == 0) {
+        System.out.println("Error al guardar socio");
+      }
+
+      try (ResultSet generadas = stmt.getGeneratedKeys()) {
+        if (generadas.next()) {
+          setId((int) generadas.getLong(1));
+        }
+        else {
+          System.out.println("No se devolvio ninguna ID");
+        }
+      }
+
       stmt.close();
 
       return true;

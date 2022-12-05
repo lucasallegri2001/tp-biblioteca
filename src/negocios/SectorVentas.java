@@ -1,13 +1,11 @@
 package negocios;
 
-import datos.Empleado;
-import datos.Libro;
-import datos.Promocion;
-import datos.Socio;
+import datos.*;
 import interfaz.Interfaz;
 import interfaz.InterfazLogin;
 import interfaz.InterfazEmpleado;
 
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,11 +14,26 @@ public class SectorVentas {
   LinkedList<Socio> Socios = new LinkedList<Socio>();
   LinkedList<Libro> Libros = new LinkedList<Libro>();
   LinkedList<Empleado> Empleados = new LinkedList<Empleado>();
+  LinkedList<Venta> Ventas = new LinkedList<Venta>();
+  LinkedList<Promocion> Promociones = new LinkedList<Promocion>();
   ConexionDB baseDatos = ConexionDB.getInstancia();
 
   public static void main(String[] args) {
-    Interfaz interfaz1 = new Interfaz();
-    interfaz1.iniciar();
+
+    Object[] opciones = {"Menú Usuario", "Menú Empleado"};
+
+    int eleccion = JOptionPane.showOptionDialog(null,
+      "Elija una opción",
+      "Elija una opción",
+      JOptionPane.DEFAULT_OPTION,
+      JOptionPane.QUESTION_MESSAGE,
+      null,
+      opciones,
+      null);
+    switch(eleccion) {
+      case 0: new Interfaz().iniciarUsuario();
+      case 1: new Interfaz().iniciar();
+    }
   }
   
   public void sobreCarga() {
@@ -31,7 +44,7 @@ public class SectorVentas {
         addLibro(libro);
       }
     } else {
-      new Libro("Los Juegos del Hambre", 10).guardar();
+      new Libro("Los Juegos del Hambre", 10, 500).guardar();
     }
 
     LinkedList<Empleado> empleados = Empleado.listar();
@@ -65,6 +78,20 @@ public class SectorVentas {
     //ventas.addLibro(new Libro(3, "Juego de Tronos", 10));
     //ventas.addLibro(new Libro(4, "1984", 10));
     //ventas.addLibro(new Libro(5, "Bajo la Misma Estrella", 10));
+
+    LinkedList<Venta> ventas = Venta.listar();
+    if(ventas != null && !ventas.isEmpty()) {
+      for(Venta venta : ventas) {
+        addVenta(venta);
+      }
+    }
+
+    /*LinkedList<Promocion> promociones = Promocion.listar();
+    if(promociones != null && !promociones.isEmpty()) {
+      for(Promocion promocion : promociones) {
+        addPromocion(promocion);
+      }
+    }*/
 
   }
 
@@ -127,13 +154,25 @@ public class SectorVentas {
     return empleado.guardar();
   }
 
+  public boolean addVenta(Venta venta) {
+    // TODO: Faltan realizar validaciones antes de agregar ventas.
+    Ventas.add(venta);
+    return true;
+  }
+
+  public boolean guardarVenta(Venta venta) {
+    // TODO: Faltan realizar validaciones antes de guardar ventas.
+    return venta.guardar();
+  }
+
   public boolean addPromocion(Promocion promocion) {
     char[] dato = promocion.getNombre_promocion().toCharArray();
 
     if(dato.length > 1 && dato.length < 2000) {
       double precio = promocion.getPrecio();
       if (precio>=1) {
-        return promocion.agregar();
+        Promociones.add(promocion);
+        return true;
       }
     }
     return false;
@@ -213,6 +252,35 @@ public class SectorVentas {
   public void renombrarLibro(Libro libro, String nombre) {
     libro.setNombre(nombre);
     libro.actualizar();
+  }
+
+  public int[] ventasLibroEspecifico(Libro libro) {
+    int cantidad = 0;
+    int ganancia = 0;
+    int[] resumen = new int[]{0,0};
+    for(Venta venta : Ventas) {
+      if(venta.getIdLibro() == libro.getId()) {
+        cantidad += venta.getCantidad();
+        ganancia += venta.getPrecio();
+      }
+    }
+    resumen[0] = cantidad;
+    resumen[1] = ganancia;
+    return resumen;
+  }
+
+  public int[] ventasDelDia() {
+    int cantidad = 0;
+    int ganancia = 0;
+    int[] resumen = new int[2];
+    for(Venta venta : Ventas) {
+      // TODO: Verificar que la venta se haya hecho el día de hoy. Actualmente devuelve todas las ventas.
+      cantidad++;
+      ganancia += venta.getPrecio();
+    }
+    resumen[0] = cantidad;
+    resumen[1] = ganancia;
+    return resumen;
   }
 
   /* Código de referencia - Software Estudiantil

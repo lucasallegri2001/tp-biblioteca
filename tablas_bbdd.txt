@@ -29,7 +29,8 @@ CREATE TABLE empleado (
 CREATE TABLE libro (
        id INT NOT NULL AUTO_INCREMENT,                                    
        nombre VARCHAR(50) NOT NULL,                              
-       stock INT NOT NULL,                              
+       stock INT NOT NULL,
+       precio DOUBLE NOT NULL,
        
        PRIMARY KEY (id)
 
@@ -43,4 +44,15 @@ CREATE TABLE promocion (
        
        PRIMARY KEY (id)
        
+);
+
+CREATE TABLE venta (
+       id INT NOT NULL AUTO_INCREMENT,
+       id_libro INT(11) NOT NULL,
+       cantidad INT(11) NOT NULL,
+       fecha DATETIME NOT NULL,
+       precio DOUBLE NOT NULL,
+
+       PRIMARY KEY (id)
+
 );
